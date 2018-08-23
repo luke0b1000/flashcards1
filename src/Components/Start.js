@@ -9,7 +9,6 @@ import DeckList from "./DeckList";
 import SingleDeckNav from "./OneDeck";
 import NewDeckTitle from "./NewDeckTitle";
 import NewQuestion from "./NewQuestion";
-import Hello from "./Hello";
 import OneDeck from "./OneDeck";
 import Card from "./Card"
 

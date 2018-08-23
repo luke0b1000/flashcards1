@@ -91,7 +91,7 @@ export const setAsyncQuestion = async (deckTitle, question, answer) => {
             [deckTitle]: {
                 ...asyncObj[deckTitle],
                 questions: [
-                    ...asyncObj[deckTitle].questions,
+                    ...asyncObj[deckTitle]["questions"],
                     {
                         question,
                         answer
