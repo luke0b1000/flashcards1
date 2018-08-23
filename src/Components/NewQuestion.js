@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { TextInput, Button, Text, View, StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import { handleDeckQuestion } from "../actions/asyncstatestorage";
+import { bindActionCreators } from "redux";
 
 class NewQuestion extends Component {
     state = {
@@ -7,9 +10,16 @@ class NewQuestion extends Component {
         answer: "answer placeholder"
     };
     handleSubmit = () => {
-        // Do stuff
-        this.props.navigation.navigate('DeckList')
-    }
+        const deckTitle = this.props.deckTitle;
+        this.props.handleDeckQuestion(
+            deckTitle,
+            this.state.question,
+            this.state.answer
+        );
+        this.props.navigation.navigate("OneDeck", {
+            deckTitle
+        });
+    };
     render() {
         return (
             <View>
@@ -22,10 +32,24 @@ class NewQuestion extends Component {
                     onChangeText={answer => this.setState({ answer })}
                     value={this.state.answer}
                 />
-                <Button onPress={this.handleSubmit} title='submit' />
+                <Button onPress={this.handleSubmit} title="submit" />
             </View>
         );
     }
 }
 
-export default NewQuestion;
+function mapStateToProps({}, { navigation }) {
+    const deckTitle = navigation.getParam("deckTitle");
+    return {
+        deckTitle
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ handleDeckQuestion }, dispatch);
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(NewQuestion);

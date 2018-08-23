@@ -1,26 +1,39 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet, Button, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-
-import EachDeck from "./EachDeck";
 
 class DeckList extends Component {
     render() {
-        const { deckList, navigation } = this.props;
+        const { deckList, asyncStateStorage } = this.props;
         return (
             <View>
-                <Text>DeckList</Text>
-                {deckList
-                    ? deckList.map(deck => (
-                          <EachDeck
-                              key={deck}
-                              deck={deck}
-                              rnavigation={navigation}
-                          />
-                      ))
-                    : ""}
+                <Text>My Deck</Text>
+                {deckList ? (
+                    deckList.map(deckTitle => {
+                        const deckCardLength =
+                            asyncStateStorage[deckTitle].questions.length;
+                        return (
+                            <TouchableOpacity
+                                key={deckTitle}
+                                onPress={() => {
+                                    this.props.navigation.navigate("OneDeck", {
+                                        deckTitle
+                                    });
+                                }}
+                            >
+                                <Text>
+                                    {deckTitle} - {deckCardLength}
+                                </Text>
+                            </TouchableOpacity>
+                        );
+                    })
+                ) : (
+                    <Text>No Decks</Text>
+                )}
                 <Button
-                    onPress={() => this.props.navigation.navigate("NewDeck")}
+                    onPress={() =>
+                        this.props.navigation.navigate("NewDeckTitle")
+                    }
                     title="NEW DECK"
                 />
             </View>
@@ -31,6 +44,7 @@ class DeckList extends Component {
 function mapStateToProps({ asyncStateStorage }) {
     const deckList = Object.keys(asyncStateStorage);
     return {
+        asyncStateStorage,
         deckList
     };
 }

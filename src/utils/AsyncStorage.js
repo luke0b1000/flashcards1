@@ -66,3 +66,40 @@ export const getAsyncData = async () => {
         console.log("getAsyncData", err);
     }
 };
+
+export const setAsyncTitle = async deckTitle => {
+    try {
+        const asyncObj = await getAsyncData();
+        let response = await AsyncStorage.mergeItem(
+            ASYNC_KEY,
+            JSON.stringify({
+                ...asyncObj,
+                deckTitle: { title: deckTitle, questions: [] }
+            })
+        );
+        return response;
+    } catch (err) {
+        console.log("setAsyncTitle", err);
+    }
+};
+
+export const setAsyncQuestion = async (deckTitle, question, answer) => {
+    try {
+        const asyncObj = await getAsyncData();
+        let response = await AsyncStorage.mergeItem(ASYNC_KEY, JSON.stringify({
+            ...asyncObj,
+            [deckTitle]: {
+                ...asyncObj[deckTitle],
+                questions: [
+                    ...asyncObj[deckTitle].questions,
+                    {
+                        question,
+                        answer
+                    }
+                ]
+            }
+        }));
+    } catch (err) {
+        console.log("setAsyncQuestion", err);
+    }
+};

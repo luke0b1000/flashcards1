@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, Button, TextInput } from "react-native";
-import { newDeckTitle } from "../actions/asyncstatestorage";
+import { handleDeckTitle } from "../actions/asyncstatestorage";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 
-class NewDeck extends Component {
+class NewDeckTitle extends Component {
     state = {
         deckTitle: "Deck Title"
     };
     handleSubmit = () => {
-        this.props.newDeckTitle(this.state.deckTitle);
-        this.props.navigation.navigate("NewQuestion", {
+        this.props.handleDeckTitle(this.state.deckTitle);
+        this.props.navigation.navigate("OneDeck", {
             deckTitle: this.state.deckTitle
         });
     };
     render() {
         return (
             <View>
-                <Text>NewDeck</Text>
+                <Text>What is the Deck Title?</Text>
                 <TextInput
                     onChangeText={deckTitle => this.setState({ deckTitle })}
                     value={this.state.deckTitle}
@@ -29,10 +29,10 @@ class NewDeck extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(newDeckTitle, dispatch);
+    return bindActionCreators({ handleDeckTitle }, dispatch);
 }
 
 export default connect(
     null,
     mapDispatchToProps
-)(NewDeck);
+)(NewDeckTitle);

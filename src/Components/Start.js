@@ -6,10 +6,12 @@ import { handleInitialData } from "../actions/asyncstatestorage";
 import Loading from "./Loading";
 import { createStackNavigator } from "react-navigation";
 import DeckList from "./DeckList";
-import SingleDeckNav from "./SingleDeckNav";
-import NewDeck from "./NewDeck";
-import NewQuestion from './NewQuestion'
-import Hello from './Hello'
+import SingleDeckNav from "./OneDeck";
+import NewDeckTitle from "./NewDeckTitle";
+import NewQuestion from "./NewQuestion";
+import Hello from "./Hello";
+import OneDeck from "./OneDeck";
+import Card from "./Card"
 
 const StartStackNavigator = createStackNavigator(
     {
@@ -19,14 +21,20 @@ const StartStackNavigator = createStackNavigator(
         SingleDeckNav: {
             screen: SingleDeckNav
         },
-        NewDeck: {
-            screen: NewDeck
+        NewDeckTitle: {
+            screen: NewDeckTitle
         },
         NewQuestion: {
             screen: NewQuestion
         },
         Hello: {
             screen: Hello
+        },
+        OneDeck: {
+            screen: OneDeck
+        },
+        Card: {
+            screen : Card
         }
     },
     {
